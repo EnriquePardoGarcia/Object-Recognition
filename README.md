@@ -1,55 +1,130 @@
-# Object-Recognition
-Project Overview
+# Object Recognition with Image Masks and Data Augmentation
 
-This project aims to recognize and classify animal objects in images using pixel-level masks and manual data augmentation.
-It was developed as part of a Computer Vision course and focuses on creating a reproducible pipeline for loading, processing, augmenting, and analyzing images of different object classes.
+## Overview
+This project focuses on **recognizing and classifying animal objects** in images using **pixel-level masks** and **manual data augmentation**.  
+Developed as part of a Computer Vision course, it provides a reproducible pipeline for loading, preprocessing, augmenting, and analyzing images of multiple object classes.
 
-Problem Statement
+---
 
-Object recognition is a fundamental task in computer vision that requires distinguishing multiple classes within complex and often unbalanced datasets.
-The challenges addressed in this project include:
+## Problem Statement
+Object recognition is a fundamental challenge in computer vision, requiring accurate classification of objects across complex and unbalanced datasets.  
+This project addresses key issues such as:
 
-Limited number of images per class.
+- Limited number of images per class  
+- Variations in lighting, orientation, and object scale  
+- The need to apply **masks** to identify each object's region of interest (ROI)
 
-Variations in lighting, orientation, and object scale.
+The objective is to improve recognition performance by increasing dataset diversity through **augmentation** and by analyzing **color-based descriptors** extracted from masked regions.
 
-The need to use masks to identify the region of interest (ROI) of each object.
+---
 
-The objective is to improve recognition performance by increasing dataset diversity through augmentation and by analyzing color-based descriptors extracted from the masked regions.
+## Methodology
 
-Methodology
-
-Dataset Loading
-Images and their corresponding masks are loaded from a structured directory.
+### 1. Dataset Loading
+Images and their corresponding masks are loaded from a structured directory.  
 Each image is resized to a fixed resolution and normalized between 0 and 1.
 
-Mask Application
-Binary masks are used to isolate the region corresponding to the object, ensuring that background pixels do not interfere with the feature extraction process.
+### 2. Mask Application
+Binary masks are applied to isolate each object's region of interest (ROI), ensuring that background pixels do not interfere with feature extraction.
 
-Data Augmentation
-To compensate for the small dataset size, several manual transformations are applied:
+### 3. Data Augmentation
+To compensate for limited data, several manual transformations are applied:
 
-Horizontal and vertical flips
+| Transformation | Description |
+|----------------|--------------|
+| Horizontal & Vertical Flips | Simulate different orientations |
+| Random Rotations & Shifts | Add spatial variability |
+| Brightness & Contrast Adjustments | Handle lighting variations |
+| Gamma Correction | Enhance visual contrast |
 
-Random rotations and shifts
+### 4. Feature Extraction
+For each masked object, **average RGB values** and additional color descriptors are computed.  
+These features are used to train classifiers or visualize the separability between object classes.
 
-Brightness and contrast adjustments
+---
 
-Gamma correction
+## Results
+The **augmented dataset** increases both variability and training size, leading to improved model robustness.  
+Objects are successfully identified and isolated using masks, while color-based features enable accurate differentiation between categories such as **elephant**, **rhino**, and others.
 
-Feature Extraction
-Average RGB values and additional descriptors are computed for each object region.
-These features are later used to train simple classifiers or to visualize class separability.
+| Aspect | Improvement Observed |
+|--------|----------------------|
+| Dataset Size | Expanded through augmentation |
+| Model Robustness | Improved against rotation and brightness changes |
+| Feature Distinction | Enhanced through color-space analysis |
 
-Results
+---
 
-The augmented dataset significantly increases the variability and size of the training set, improving model robustness.
-Objects are successfully identified and isolated through masks, while the color features enable accurate differentiation between classes such as elephant, rhino, and others.
+## Visualization
+The project includes visualization functions to display:
+- Original and augmented images  
+- Binary masks and ROI extraction  
+- Comparative plots of color feature distributions
 
-Conclusion
+Example:
 
-This project demonstrates a practical approach to object recognition using masks and data augmentation.
-It highlights how preprocessing and augmentation can enhance model performance even with limited data, and it establishes a foundation for future work in feature-based or deep learning object detection.
+```python
+# Display original vs augmented samples
+show_original_and_augmented(image_path, mask_path)
+```
 
-Visualization
-The project includes functions to display both original and augmented images, as well as their corresponding binary masks.
+---
+
+## Folder Structure
+```
+├── data/
+│   ├── images/                 # Original input images
+│   ├── masks/                  # Corresponding binary masks
+│   ├── augmented/              # Output augmented samples
+│   └── features.csv            # Extracted features (RGB, stats, etc.)
+├── notebooks/
+│   └── parte2_Pardo_Garcia_Enrique.ipynb
+├── src/
+│   └── augmentation_utils.py   # Helper functions for augmentation
+├── results/
+│   └── visualizations/         # Example outputs and plots
+└── README.md
+```
+
+---
+
+## Technologies Used
+- **Language:** Python  
+- **Libraries:** NumPy, OpenCV, Matplotlib, Scikit-image, Pandas  
+
+---
+
+## Execution Guide
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/EnriquePardoGarcia/computer-vision-projects.git
+   cd computer-vision-projects/object-recognition
+   ```
+
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Run the notebook:
+   ```bash
+   jupyter notebook parte2_Pardo_Garcia_Enrique.ipynb
+   ```
+
+4. Execute the following steps inside the notebook:
+   - Load dataset and masks  
+   - Apply augmentations  
+   - Extract color-based features  
+   - Visualize object separability
+
+---
+
+## Conclusion
+This project demonstrates a **practical, feature-based approach to object recognition** using **masks and data augmentation**.  
+It showcases how careful preprocessing and augmentation can significantly enhance recognition performance, even in small datasets, and lays the groundwork for future **deep learning extensions**.
+
+---
+
+## Author
+Developed by **Enrique Pardo García**  
+*Data Science and Engineering student – University of A Coruña*
